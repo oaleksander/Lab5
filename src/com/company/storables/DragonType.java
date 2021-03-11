@@ -1,21 +1,30 @@
 package com.company.storables;
 
-import javax.xml.bind.annotation.XmlEnum;
-import javax.xml.bind.annotation.XmlEnumValue;
-import javax.xml.bind.annotation.XmlType;
-
-@XmlType
-@XmlEnum(String.class)
+/**
+ * Type of the dragon
+ * @see Dragon
+ */
 public enum DragonType {
-    @XmlEnumValue("WATER")
-    WATER,
+    AIR("AIR"),
+    FIRE("FIRE"),
+    UNDERGROUND("UNDERGROUND"),
+    WATER("WATER");
 
-    @XmlEnumValue("UNDERGROUND")
-    UNDERGROUND,
+    private final String label;
 
-    @XmlEnumValue("AIR")
-    AIR,
+    /**
+     * Dragon type constructor
+     * @param label name
+     */
+    DragonType(String label) {
+        this.label = label;
+    }
 
-    @XmlEnumValue("FIRE")
-    FIRE;
+    /**
+     * Gets dragon type name
+     * @return dragon type name
+     */
+    public String getLabel() {
+        return label;
+    }
 }

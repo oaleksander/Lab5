@@ -1,5 +1,6 @@
 package com.company.ui;
 
+
 public class UserCommand {
     public String Command = null;
     public String Argument = null;

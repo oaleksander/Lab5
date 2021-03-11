@@ -1,17 +1,39 @@
 package com.company.storables;
 
+/**
+ * Head of the dragon
+ * @see Dragon
+ */
 public class DragonHead {
-    private Long size; //Поле может быть null
-
-    public Long getSize() {
-        return size;
+    /**
+     * Dragon head constructor
+     * @param eyesCount count of eyes
+     */
+    public DragonHead(float eyesCount) {
+        this.eyesCount = eyesCount;
     }
 
-    public void setSize(Long size) {
-        this.size = size;
+    /**
+     * Get number of eyes
+     * @return number of eyes
+     */
+    public float getEyesCount() {
+        return eyesCount;
     }
 
-    public DragonHead(Long size) {
-        this.size = size;
+    /**
+     * Set number of eyes
+     * @param eyesCount new number of eyes
+     */
+    public void setEyesCount(float eyesCount) {
+        this.eyesCount = eyesCount;
+    }
+
+    private float eyesCount;
+
+    @Override
+    public String toString() {
+        return "DragonHead: " +
+                " eyesCount=" + eyesCount;
     }
 }

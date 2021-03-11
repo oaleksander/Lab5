@@ -5,20 +5,29 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class CommandReader {
-    public static UserCommand readCommand() {
+
+    public static String getStringFromTerminal() {
         try {
-            return readCommand(new BufferedReader(new InputStreamReader(System.in)).readLine());
+            return new BufferedReader(new InputStreamReader(System.in)).readLine();
         } catch (IOException e) {
             System.out.println("Error: " + e.getMessage() + ".");
-            return new UserCommand();
+            return "";
         }
     }
 
-    public static UserCommand readCommand(String singleString) {
-        return (readCommand(singleString.split(" ", 2)));
+    public static String[] getStringsFromTerminal(){
+        return getStringFromTerminal().split(" ");
     }
 
-    public static UserCommand readCommand(String[] input) {
+    public static UserCommand readCommandFromTerminal() {
+            return readCommandFromString(getStringFromTerminal());
+    }
+
+    public static UserCommand readCommandFromString(String singleString) {
+        return (readCommandFromString(singleString.split(" ", 2)));
+    }
+
+    public static UserCommand readCommandFromString(String[] input) {
         if (input.length != 0) {
             input[0] = input[0].toLowerCase();
             if (input.length > 1)

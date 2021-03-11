@@ -2,18 +2,20 @@ package com.company.collectionmanagement;
 
 import com.company.storables.Dragon;
 
-import java.util.ArrayDeque;
+import java.util.*;
 
 public class DragonHolder {
-    private static ArrayDeque<Dragon> collection = new ArrayDeque<Dragon>();
-    public static void add(Dragon e)
-    {
-        collection.add(e);
+    private static final Object lock  = new Object();
+
+    private static final Date initializationDate = new Date();
+
+    private static final Hashtable<Integer,Dragon> collection = new Hashtable<>();
+
+    synchronized public static Hashtable<Integer, Dragon> getCollection() {
+        return collection;
     }
-    public static void remove(Dragon e){
-        collection.remove(e);
-    }
-    public static Dragon pollFirst(){
-        return collection.pollFirst();
+
+    public static Date getInitializationDate() {
+        return initializationDate;
     }
 }

@@ -4,7 +4,7 @@ import com.company.collectionmanagement.DragonHolder;
 
 import java.util.LinkedList;
 
-public class RemoveLowerKey implements Command{
+public class RemoveLowerKey implements Command {
     @Override
     public String getLabel() {
         return "remove_lower_key";
@@ -23,7 +23,7 @@ public class RemoveLowerKey implements Command{
     @Override
     public String execute(String argument) {
         int keyThreshold;
-        if(argument == null || argument.isEmpty())
+        if (argument == null || argument.isEmpty())
             throw new IllegalArgumentException("Please specify Dragon key.");
         try {
             keyThreshold = Integer.parseInt(argument);
@@ -31,8 +31,10 @@ public class RemoveLowerKey implements Command{
             throw new IllegalArgumentException("Illegal key: " + e.getMessage() + ".");
         }
         LinkedList<Integer> toRemove = new LinkedList<>();
-        DragonHolder.getCollection().forEach((key, dragon)->{if(key<keyThreshold) toRemove.add(key);});
-        toRemove.forEach(key->DragonHolder.getCollection().remove(key));
+        DragonHolder.getCollection().forEach((key, dragon) -> {
+            if (key < keyThreshold) toRemove.add(key);
+        });
+        toRemove.forEach(key -> DragonHolder.getCollection().remove(key));
         return "Removed " + toRemove.size() + " Dragons.";
     }
 }

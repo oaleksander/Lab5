@@ -4,7 +4,9 @@ import com.company.collectionmanagement.DragonHolder;
 
 import java.util.Arrays;
 
-public class Show implements Command{
+public class Show implements Command {
+    String response;
+
     public String getLabel() {
         return "show";
     }
@@ -13,7 +15,6 @@ public class Show implements Command{
         return "Show all collection elements.";
     }
 
-    String response;
     public String execute(String argument) {
         response = "Collection:\n";
         Arrays.stream(DragonHolder.getCollection().values().toArray()).forEach(element -> response += element.toString() + "\n");

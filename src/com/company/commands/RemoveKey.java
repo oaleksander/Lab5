@@ -1,10 +1,9 @@
 package com.company.commands;
 
-import com.company.collectionmanagement.DragonFactory;
 import com.company.collectionmanagement.DragonHolder;
 import com.company.storables.Dragon;
 
-public class RemoveKey implements Command{
+public class RemoveKey implements Command {
     @Override
     public String getLabel() {
         return "remove_key";
@@ -23,7 +22,7 @@ public class RemoveKey implements Command{
     @Override
     public String execute(String argument) {
         int key;
-        if(argument == null || argument.isEmpty())
+        if (argument == null || argument.isEmpty())
             throw new IllegalArgumentException("Please specify Dragon key.");
         try {
             key = Integer.parseInt(argument);
@@ -31,7 +30,7 @@ public class RemoveKey implements Command{
             throw new IllegalArgumentException("Illegal key: " + e.getMessage() + ".");
         }
         Dragon removed = DragonHolder.getCollection().remove(key);
-        if(removed == null)
+        if (removed == null)
             throw new IllegalArgumentException("No Dragon found with key \"" + key + "\".");
         return "Remove successful.";
     }

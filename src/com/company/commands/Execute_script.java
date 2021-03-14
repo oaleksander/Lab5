@@ -1,15 +1,13 @@
 package com.company.commands;
 
-import com.company.collectionmanagement.DragonHolder;
 import com.company.ui.CommandReader;
 import com.company.ui.UserRunnable;
 
 import java.io.*;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
-public class Execute_script implements Command{
+public class Execute_script implements Command {
     @Override
     public String getLabel() {
         return "execute_script";
@@ -35,7 +33,7 @@ public class Execute_script implements Command{
         } catch (NullPointerException e) {
             throw new IllegalArgumentException("Please specify filename.");
         }
-        if(argument.isBlank())
+        if (argument.isBlank())
             throw new IllegalArgumentException("Please specify filename.");
         try {
             if (!file.canRead())
@@ -45,19 +43,24 @@ public class Execute_script implements Command{
         }
         try {
             BufferedInputStream fileReader = new BufferedInputStream(new FileInputStream(file));
-            UserRunnable userRunnable = new UserRunnable(UserRunnable.scriptCommands,printStream,fileReader);
+            UserRunnable userRunnable = new UserRunnable(UserRunnable.scriptCommands, printStream, fileReader);
             StringBuilder stringBuilder = new StringBuilder();
-            while(fileReader.available() > 0)
+            while (fileReader.available() > 0)
                 stringBuilder.append((char) fileReader.read());
             Arrays.stream(stringBuilder.toString().split("[\\r\\n]+"))
-                    .forEach(line->{
-                        if(!line.isBlank())
-                            userRunnable.Execute(CommandReader.readCommandFromString(line));
-                            });
+                    .forEach(line -> {
+                        if (!line.isBlank())
+                            printStream.append(line).append("\n");
+                        String formattedLine = line
+                                .replaceAll("\\breplace_if_greater\\b", "replace_if_greater_csv")
+                                .replaceAll("\\bupdate\\b", "update_csv")
+                                .replaceAll("\\binsert\\b", "insert_csv");
+                        userRunnable.Execute(CommandReader.readCommandFromString(formattedLine));
+                    });
             fileReader.close();
-        } catch(FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             throw new IllegalArgumentException("Can't find file \"" + file + "\".");
-        } catch(SecurityException e) {
+        } catch (SecurityException e) {
             throw new IllegalArgumentException("Can't access file \"" + file + "\".");
         } catch (IOException e) {
             throw new IllegalArgumentException("Error occurred accessing file \"" + file + "\".");

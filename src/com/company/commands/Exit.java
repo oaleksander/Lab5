@@ -3,7 +3,9 @@ package com.company.commands;
 public class Exit implements Command {
 
     @Override
-    public String getLabel() { return "exit"; }
+    public String getLabel() {
+        return "exit";
+    }
 
     public String getDescription() {
         return "Exit the program (without saving).";

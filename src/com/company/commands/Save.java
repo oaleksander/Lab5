@@ -5,7 +5,7 @@ import com.company.ui.UserRunnable;
 
 import java.io.*;
 
-public class Save implements Command{
+public class Save implements Command {
 
     @Override
     public String getLabel() {
@@ -23,17 +23,17 @@ public class Save implements Command{
         try {
             file.createNewFile();
             OutputStreamWriter fileWriter = new OutputStreamWriter(new FileOutputStream(file));
-            DragonHolder.getCollection().forEach((key,value) -> {
+            DragonHolder.getCollection().forEach((key, value) -> {
                 try {
-                    fileWriter.write(key+","+value.toCsvString()+"\n");
+                    fileWriter.write(key + "," + value.toCsvString() + "\n");
                 } catch (IOException e) {
                     throw new IllegalArgumentException("Error occurred writing collection to file \"" + file + "\".");
                 }
             });
             fileWriter.close();
-        } catch(FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             throw new IllegalArgumentException("Can't find file \"" + file + "\".");
-        } catch(SecurityException e) {
+        } catch (SecurityException e) {
             throw new IllegalArgumentException("Can't access file \"" + file + "\".");
         } catch (IOException e) {
             throw new IllegalArgumentException("Error occurred accessing file \"" + file + "\".");

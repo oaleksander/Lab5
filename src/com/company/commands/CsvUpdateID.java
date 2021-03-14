@@ -1,6 +1,5 @@
 package com.company.commands;
 
-import com.company.collectionmanagement.DragonFactory;
 import com.company.collectionmanagement.DragonHolder;
 import com.company.storables.Dragon;
 
@@ -8,7 +7,7 @@ import java.util.Date;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class CsvUpdateID  implements Command{
+public class CsvUpdateID implements Command {
     @Override
     public String getLabel() {
         return "update_csv";
@@ -32,16 +31,15 @@ public class CsvUpdateID  implements Command{
         AtomicReference<Long> dragonId = new AtomicReference<>();
         AtomicReference<Date> dragonCreationDate = new AtomicReference<>();
         DragonHolder.getCollection().forEach((key, value) -> {
-            if(value.getId() == newDragon.getId())
-            {
+            if (value.getId() == newDragon.getId()) {
                 dragonKey.set(key);
                 dragonId.set(value.getId());
                 dragonCreationDate.set(value.getCreationDate());
                 found.set(true);
-            }});
-        if(!found.get()) throw new IllegalArgumentException("Dragon with id '" + argument + "' not found");
-        else
-        {
+            }
+        });
+        if (!found.get()) throw new IllegalArgumentException("Dragon with id '" + argument + "' not found");
+        else {
             newDragon.setCreationDate(dragonCreationDate.get());
             DragonHolder.getCollection().put(dragonKey.get(), newDragon);
         }

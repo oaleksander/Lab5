@@ -2,7 +2,7 @@ package com.company.commands;
 
 import com.company.collectionmanagement.DragonHolder;
 
-public class Info implements Command{
+public class Info implements Command {
     public String getLabel() {
         return "info";
     }
@@ -12,6 +12,6 @@ public class Info implements Command{
     }
 
     public String execute(String argument) {
-        return "Dragon collection, initialization date: " + DragonHolder.getInitializationDate()+ ", number of elements: " + DragonHolder.getCollection().size() + ".";
+        return "Dragon collection, initialization date: " + DragonHolder.getInitializationDate() + ", number of elements: " + DragonHolder.getCollection().size() + ".";
     }
 }

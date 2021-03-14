@@ -1,6 +1,5 @@
 package com.company.commands;
 
-import com.company.collectionmanagement.DragonFactory;
 import com.company.collectionmanagement.DragonHolder;
 import com.company.storables.Dragon;
 

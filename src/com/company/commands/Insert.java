@@ -17,7 +17,7 @@ public class Insert implements Command {
     }
 
     public String execute(String argument) {
-        if(argument == null || argument.isEmpty())
+        if (argument == null || argument.isEmpty())
             throw new IllegalArgumentException("Please specify Dragon key.");
         try {
             DragonHolder.getCollection().put(Integer.parseInt(argument), DragonFactory.inputNewDragonFromConsole());

@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class UpdateID implements Command{
+public class UpdateID implements Command {
     @Override
     public String getLabel() {
         return "update";
@@ -36,16 +36,16 @@ public class UpdateID implements Command{
         AtomicReference<Long> dragonId = new AtomicReference<>();
         AtomicReference<Date> dragonCreationDate = new AtomicReference<>();
         DragonHolder.getCollection().forEach((key, value) -> {
-            if(value.getId() == id)
-            {
+            if (value.getId() == id) {
                 dragonKey.set(key);
                 dragonId.set(value.getId());
                 dragonCreationDate.set(value.getCreationDate());
                 found.set(true);
-            }});
-        if(!found.get()) throw new IllegalArgumentException("Dragon with id '" + argument + "' not found");
+            }
+        });
+        if (!found.get()) throw new IllegalArgumentException("Dragon with id '" + argument + "' not found");
         else
-            DragonHolder.getCollection().put(dragonKey.get(), DragonFactory.inputDragonFromConsole(dragonId.get(),dragonCreationDate.get()));
+            DragonHolder.getCollection().put(dragonKey.get(), DragonFactory.inputDragonFromConsole(dragonId.get(), dragonCreationDate.get()));
         return "Update successful.";
     }
 }

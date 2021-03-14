@@ -4,39 +4,49 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * Class designed to get commands from buffered readers and strings
+ *
+ * @see UserRunnable
+ */
 public class CommandReader {
 
     BufferedReader bufferedReader;
 
-    public CommandReader(BufferedReader _bufferedReader) {
-        bufferedReader = _bufferedReader;
+    /**
+     * Command reader constructor
+     *
+     * @param bufferedReader buffered reader to get commands from
+     */
+    public CommandReader(BufferedReader bufferedReader) {
+        this.bufferedReader = bufferedReader;
     }
 
-    public String getStringFromBufferedReader() {
-        try {
-            return bufferedReader.readLine();
-        } catch (IOException e) {
-            System.out.println("Error: " + e.getMessage() + ".");
-            return "";
-        }
-    }
-
-    public static String[] getStringsFromTerminal(){
+    /**
+     * Get an array of strings from System.in (separated by spaces)
+     *
+     * @return Array of strings
+     */
+    public static String[] getStringsFromTerminal() {
         return new CommandReader(new BufferedReader(new InputStreamReader(System.in))).getStringFromBufferedReader().split(" ");
     }
 
-    public static String getStringFromTerminal(){
-        return new CommandReader(new BufferedReader(new InputStreamReader(System.in))).getStringFromBufferedReader();
-    }
-
-    public UserCommand readCommandFromBufferedReader() {
-            return readCommandFromString(getStringFromBufferedReader());
-    }
-
+    /**
+     * Get a command from string
+     *
+     * @param singleString string to parse from
+     * @return Command
+     */
     public static UserCommand readCommandFromString(String singleString) {
         return (readCommandFromString(singleString.split(" ", 2)));
     }
 
+    /**
+     * Get a command from strings
+     *
+     * @param input strings to parse from
+     * @return Command
+     */
     public static UserCommand readCommandFromString(String[] input) {
         if (input.length != 0) {
             input[0] = input[0].toLowerCase();
@@ -47,22 +57,61 @@ public class CommandReader {
         } else return new UserCommand();
     }
 
+    /**
+     * Gets a string from buffered reader line
+     *
+     * @return Received string
+     */
+    public String getStringFromBufferedReader() {
+        try {
+            return bufferedReader.readLine();
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage() + ".");
+            return "";
+        }
+    }
+
+    /**
+     * Get a command from Buffered Reader
+     *
+     * @return Command
+     */
+    public UserCommand readCommandFromBufferedReader() {
+        return readCommandFromString(getStringFromBufferedReader());
+    }
+
+    /**
+     * User command class
+     */
     public static class UserCommand {
         public String Command = null;
         public String Argument = null;
 
-        public UserCommand(String Command, String Argument)
-        {
+        /**
+         * User command constructor with argument
+         *
+         * @param Command  Command
+         * @param Argument Argument
+         */
+        public UserCommand(String Command, String Argument) {
             this.Command = Command;
             this.Argument = Argument;
         }
 
-        public UserCommand(String Command)
-        {
+        /**
+         * User command constructor without argument
+         *
+         * @param Command Command
+         */
+        public UserCommand(String Command) {
             this.Command = Command;
         }
 
-        public UserCommand() {}
+        /**
+         * Empty user command constructor
+         */
+        public UserCommand() {
+        }
 
         @Override
         public String toString() {

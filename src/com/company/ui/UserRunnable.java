@@ -4,28 +4,14 @@ import com.company.commands.*;
 
 import java.io.*;
 
-public class UserRunnable implements Runnable{
+/**
+ * Main command execution runnable
+ */
+public class UserRunnable implements Runnable {
 
-    private static File file = new File("C:\\Users\\muram\\IdeaProjects\\Lab5\\file.csv");
-
-    private final PrintStream printStream;
-
-    private final CommandReader commandReader;
-
-    public UserRunnable(Command[] availableCommands, PrintStream printStream, InputStream inputStream) {
-        this.availableCommands = availableCommands;
-        this.printStream = printStream;
-        this.commandReader = new CommandReader(new BufferedReader(new InputStreamReader(inputStream)));
-    }
-
-    public static File getFile() {
-        return file;
-    }
-
-    public static void setFile(String fileName) {
-        file = new File(fileName);
-    }
-
+    /**
+     * All possible commands
+     */
     public static final Command[] allCommands = {
             new Help(),
             new Info(),
@@ -48,6 +34,9 @@ public class UserRunnable implements Runnable{
             new CsvUpdateID(),
             new CsvReplaceIfGreaterAge()
     };
+    /**
+     * Commands that user can use
+     */
     public static final Command[] userCommands = {
             new Help(),
             new Info(),
@@ -57,8 +46,8 @@ public class UserRunnable implements Runnable{
             new RemoveKey(),
             new Clear(),
             new Save(),
-            //new Execute_script(),
-            //new Exit(),
+            new Execute_script(),
+            new Exit(),
             new ReplaceIfGreaterAge(),
             new RemoveGreaterKey(),
             new RemoveLowerKey(),
@@ -70,6 +59,9 @@ public class UserRunnable implements Runnable{
             //new CsvUpdateID(),
             //new CsvReplaceIfGreaterAge()
     };
+    /**
+     * Programs that execute_script can use
+     */
     public static final Command[] scriptCommands = {
             new Help(),
             new Info(),
@@ -80,7 +72,7 @@ public class UserRunnable implements Runnable{
             new Clear(),
             new Save(),
             //new Execute_script(),
-            //new Exit(),
+            new Exit(),
             //new ReplaceIfGreaterAge(),
             new RemoveGreaterKey(),
             new RemoveLowerKey(),
@@ -92,9 +84,47 @@ public class UserRunnable implements Runnable{
             new CsvUpdateID(),
             new CsvReplaceIfGreaterAge()
     };
-
+    private static File file = new File("C:\\Users\\muram\\IdeaProjects\\Lab5\\file.csv");
+    private final PrintStream printStream;
+    private final CommandReader commandReader;
     private final Command[] availableCommands;
 
+    /**
+     * User runnable constructor
+     *
+     * @param availableCommands set of available commands
+     * @param printStream       PrintStream to output to
+     * @param inputStream       InputStream to input from
+     */
+    public UserRunnable(Command[] availableCommands, PrintStream printStream, InputStream inputStream) {
+        this.availableCommands = availableCommands;
+        this.printStream = printStream;
+        this.commandReader = new CommandReader(new BufferedReader(new InputStreamReader(inputStream)));
+    }
+
+    /**
+     * Get file specified by command line argument
+     *
+     * @return File
+     */
+    public static File getFile() {
+        return file;
+    }
+
+    /**
+     * Set file to save/read collection from
+     *
+     * @param fileName File name
+     */
+    public static void setFile(String fileName) {
+        file = new File(fileName);
+    }
+
+    /**
+     * Execute specified user command
+     *
+     * @param userCommand User command
+     */
     public void Execute(CommandReader.UserCommand userCommand) {
         boolean commandIsFound = false;
         String response = "Command gave no response.";
@@ -116,10 +146,13 @@ public class UserRunnable implements Runnable{
         printStream.println(response);
     }
 
+    /**
+     * Thing that executes commands from bufferedReader until System.exit
+     */
     @Override
     public void run() {
         //noinspection InfiniteLoopStatement
-        for(;;) {
+        for (; ; ) {
             Execute(commandReader.readCommandFromBufferedReader());
         }
     }

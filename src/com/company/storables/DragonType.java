@@ -2,6 +2,7 @@ package com.company.storables;
 
 /**
  * Type of the dragon
+ *
  * @see Dragon
  */
 public enum DragonType {
@@ -14,6 +15,7 @@ public enum DragonType {
 
     /**
      * Dragon type constructor
+     *
      * @param label name
      */
     DragonType(String label) {
@@ -22,6 +24,7 @@ public enum DragonType {
 
     /**
      * Gets dragon type name
+     *
      * @return dragon type name
      */
     public String getLabel() {

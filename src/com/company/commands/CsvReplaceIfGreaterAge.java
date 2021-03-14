@@ -6,7 +6,7 @@ import com.company.storables.Dragon;
 
 import java.util.Date;
 
-public class CsvReplaceIfGreaterAge implements Command{
+public class CsvReplaceIfGreaterAge implements Command {
     @Override
     public String getLabel() {
         return "replace_if_greater_csv";
@@ -32,13 +32,13 @@ public class CsvReplaceIfGreaterAge implements Command{
             try {
                 key = Integer.parseInt(splitLine[0]);
                 Dragon currentDragon = DragonHolder.getCollection().get(key);
-                if(currentDragon== null)
+                if (currentDragon == null)
                     throw new IllegalArgumentException("No Dragon found with key \"" + key + "\".");
                 Dragon newDragon = new Dragon(splitLine[1]);
                 newDragon.setId(DragonFactory.getNewId());
                 newDragon.setCreationDate(new Date());
-                if(newDragon.getAge()>currentDragon.getAge()) {
-                    DragonHolder.getCollection().replace(Integer.parseInt(splitLine[0]),newDragon);
+                if (newDragon.getAge() > currentDragon.getAge()) {
+                    DragonHolder.getCollection().replace(Integer.parseInt(splitLine[0]), newDragon);
                     return "Remove successful.";
                 } else {
                     return "Dragon not replaced: new dragon is not older.";

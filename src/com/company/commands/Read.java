@@ -7,7 +7,9 @@ import com.company.ui.UserRunnable;
 import java.io.*;
 import java.util.Arrays;
 
-public class Read implements Command{
+public class Read implements Command {
+
+    String response;
 
     @Override
     public String getLabel() {
@@ -19,7 +21,6 @@ public class Read implements Command{
         return "Clear collection and read from file (its name is specified by command line argument).";
     }
 
-    String response;
     @Override
     public String execute(String argument) {
         response = "";
@@ -27,28 +28,29 @@ public class Read implements Command{
         try {
             BufferedInputStream fileReader = new BufferedInputStream(new FileInputStream(file));
             StringBuilder stringBuilder = new StringBuilder();
-            while(fileReader.available() > 0)
+            while (fileReader.available() > 0)
                 stringBuilder.append((char) fileReader.read());
             DragonHolder.getCollection().clear();
             Arrays.stream(stringBuilder.toString().split("[\\r\\n]+"))
-                    .forEach(line->{
-                        if(!line.isBlank())
-                        try{
-                        String[] splitLine = line.split(",", 2);
-                        if(splitLine.length < 2)
-                            throw new IllegalArgumentException("Invalid input string: \"" + line + "\".");
-                        try {
-                            DragonHolder.getCollection().put(Integer.parseInt(splitLine[0]), new Dragon(splitLine[1]));
-                        } catch (NumberFormatException e) {
-                            throw new IllegalArgumentException("Can't parse key from " + splitLine[0] + ".");
-                        }} catch (IllegalArgumentException e) {
-                            response += "Error reading from CSV line " + line + ": " + e.getMessage() + ".\n";
-                        }
+                    .forEach(line -> {
+                        if (!line.isBlank())
+                            try {
+                                String[] splitLine = line.split(",", 2);
+                                if (splitLine.length < 2)
+                                    throw new IllegalArgumentException("Invalid input string: \"" + line + "\".");
+                                try {
+                                    DragonHolder.getCollection().put(Integer.parseInt(splitLine[0]), new Dragon(splitLine[1]));
+                                } catch (NumberFormatException e) {
+                                    throw new IllegalArgumentException("Can't parse key from " + splitLine[0] + ".");
+                                }
+                            } catch (IllegalArgumentException e) {
+                                response += "Error reading from CSV line " + line + ": " + e.getMessage() + ".\n";
+                            }
                     });
             fileReader.close();
-        } catch(FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             throw new IllegalArgumentException("Can't find file \"" + file + "\".");
-        } catch(SecurityException e) {
+        } catch (SecurityException e) {
             throw new IllegalArgumentException("Can't access file \"" + file + "\".");
         } catch (IOException e) {
             throw new IllegalArgumentException("Error occurred accessing file \"" + file + "\".");

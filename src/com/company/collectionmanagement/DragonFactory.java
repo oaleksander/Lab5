@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.Date;
 
 public class DragonFactory {
-    synchronized private static long getNewId()
+    synchronized public static long getNewId()
     {
         ArrayList<Long> usedIDs = new ArrayList<>();
         DragonHolder.getCollection().values().forEach(dragon -> usedIDs.add(dragon.getId()));

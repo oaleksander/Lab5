@@ -1,10 +1,33 @@
 package com.company.storables;
 
+import java.util.regex.PatternSyntaxException;
+
 /**
  * Coordinates where Dragon can be at
  * @see Dragon
  */
-public class Coordinates {
+public class Coordinates implements Comparable<Coordinates>{
+
+    public Coordinates(String fromString) throws IllegalArgumentException{
+        String[] arguments;
+        try {
+            arguments = fromString.split(" ", 2);
+        } catch(PatternSyntaxException e) {
+            throw new IllegalArgumentException("Error in argument: " + e.getMessage() + ".");
+        }
+        try{
+            if(arguments.length > 1)
+            {
+                this.x = Double.parseDouble(arguments[0]);
+                this.y = Long.parseLong(arguments[1]);
+            } else if(arguments.length > 0) {
+                this.y = Long.parseLong(arguments[0]);
+            }
+        } catch (NumberFormatException|NullPointerException e) {
+            throw new IllegalArgumentException("Can't parse Coordinates from \"" + fromString + "\": " + e.getMessage() + ".");
+        }
+    }
+
     private double x;
     private Long y; //Can't be null
 
@@ -58,5 +81,10 @@ public class Coordinates {
                 "x=" + x +
                 ";y=" + y +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Coordinates o) {
+        return (int)(Math.sqrt(this.getY()*this.getY() + this.getX()*this.getX())-Math.sqrt(o.getY()*o.getY() +o.getX()*o.getX()));
     }
 }

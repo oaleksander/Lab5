@@ -12,6 +12,7 @@ public class DragonHolder {
     private static final Hashtable<Integer,Dragon> collection = new Hashtable<>();
 
     synchronized public static Hashtable<Integer, Dragon> getCollection() {
+        System.out.println("collection accessed!");
         return collection;
     }
 

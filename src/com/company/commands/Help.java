@@ -1,6 +1,6 @@
 package com.company.commands;
 
-import com.company.ui.CommandExecutor;
+import com.company.ui.UserRunnable;
 
 import java.util.Arrays;
 
@@ -16,7 +16,7 @@ public class Help implements Command {
     String response;
     public String execute(String argument) {
         response = "Available commands:\n";
-        Arrays.stream(CommandExecutor.AvailableCommands).forEach(command -> response +=  command.getLabel() + " " + command.getArgumentLabel() + ": " + command.getDescription() + "\n");
+        Arrays.stream(UserRunnable.allCommands).forEach(command -> response +=  command.getLabel() + " " + command.getArgumentLabel() + ": " + command.getDescription() + "\n");
         response += "Collection class members have to be entered line-by-line. Standard types (including primitive types) have to be entered in the same line as the command.";
         return response;
     }

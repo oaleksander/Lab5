@@ -1,25 +1,29 @@
 package com.company;
 
-import com.company.storables.Coordinates;
-import com.company.storables.Dragon;
-import com.company.storables.DragonHead;
-import com.company.storables.DragonType;
-import com.company.ui.CommandExecutor;
-import com.company.ui.CommandReader;
-
-import javax.xml.bind.*;
-import java.io.*;
-import java.util.Date;
+import com.company.commands.Read;
+import com.company.ui.UserRunnable;
 
 public class Main {
 
     public static void main(String[] args){
-        //DragonHolder.getCollection().put("key?",dragon);
+        UserRunnable userRunnable = new UserRunnable(UserRunnable.allCommands,System.out,System.in);
 
         System.out.println("Welcome to interactive Dragon Hashtable manager. To get help, enter \"help\".");
-        //noinspection InfiniteLoopStatement
-        for (;;) {
-            CommandExecutor.Execute(CommandReader.readCommandFromTerminal());
+        if(args.length == 0)
+            System.out.println("Input filename not specified by command line argument. Skipping...");
+        else {
+            try {
+                UserRunnable.setFile(args[0]);
+                try {
+                    System.out.println(new Read().execute());
+                } catch (Exception e) {
+                    System.out.println(e.getMessage() + " Skipping...");
+                }
+            } catch (NullPointerException e) {
+                System.out.println("Input filename is empty. Skipping...");
+            }
         }
+
+        userRunnable.run();
     }
 }

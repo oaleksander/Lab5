@@ -5,6 +5,15 @@ package com.company.storables;
  * @see Dragon
  */
 public class DragonHead {
+
+    public DragonHead(String fromString) throws IllegalArgumentException{
+        try{
+            this.eyesCount = Float.parseFloat(fromString);
+        } catch (NumberFormatException|NullPointerException e) {
+            throw new IllegalArgumentException("Can't parse Dragon Head from \"" + fromString + "\".");
+        }
+    }
+
     /**
      * Dragon head constructor
      * @param eyesCount count of eyes
